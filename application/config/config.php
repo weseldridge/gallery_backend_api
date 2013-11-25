@@ -16,6 +16,7 @@
 */
 $config['base_url']	= 'http://localhost/personal/gallery-api/';
 
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -27,6 +28,9 @@ $config['base_url']	= 'http://localhost/personal/gallery-api/';
 |
 */
 $config['index_page'] = 'index.php';
+
+
+$config['full_url'] = $config['base_url'] . $config['index_page'];
 
 /*
 |--------------------------------------------------------------------------
