@@ -12,12 +12,19 @@
 				</thead>
 				<tbody>
 					<tr>
-						<form action=<?php echo $this->config->item('full_url') . "/Catetory/add" ?> method="post">
-							<td>Num</td>
-							<td><input type="text" placeholder="New Catetory"></td>
+						<form action=<?php echo $this->config->item('full_url') . "/category/add" ?> method="post">
+							<td>#</td>
+							<td><input type="text" name='name' placeholder="New Catetory"></td>
 							<td><button type="submit" class="btn btn-primary">Add</button> </td>
 						</form>
 					</tr>
+					<?php foreach ($categories as $category): ?>
+						<tr>
+							<td><?php echo $category['id']; ?> </td>
+							<td><?php echo $category['name']; ?> </td>
+							<td></td>
+						</tr>
+					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>

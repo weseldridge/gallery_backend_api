@@ -16,7 +16,7 @@ class Category_model extends CI_Model
 	*/
 	public function add($item)
 	{
-		$this->db->insert('category', $item);
+		$this->db->insert('categories', $item);
 	}
 
 	/* ----------------------------------------------------------------
@@ -39,7 +39,7 @@ class Category_model extends CI_Model
 	public function get()
 	{
 		$q = $this->db
-					->get('category');
+					->get('categories');
 
 		$q = $q->result_array();
 
@@ -55,7 +55,7 @@ class Category_model extends CI_Model
 	{
 		$this->db
 			->where('id', $item['id'])
-			->update('category', $item);
+			->update('categories', $item);
 	}
 
 }
