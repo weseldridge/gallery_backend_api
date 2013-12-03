@@ -19,6 +19,7 @@ class User extends CI_Controller {
 
 	public function index()
 	{
+
 		redirect('user/user_dash');
 	}
 
@@ -32,8 +33,10 @@ class User extends CI_Controller {
 	{
 
 		$data['user_data'] = ''; //$this->user_data();
-
+		$this->load->view('templates/header');
+		$this->load->view('templates/sidebar');
 		$this->load->view('user/dashboard', $data);
+		$this->load->view('templates/footer');
 	}
 
 
@@ -159,7 +162,7 @@ class User extends CI_Controller {
 	*  ----------------------------------------------------------------
 	*	Takes one arguments - The user level. Returns a string that is
 	* 	user level. 
-	*
+	*/
 	private function user_level($user_level)
 	{
 		$text_level = '';
@@ -176,32 +179,32 @@ class User extends CI_Controller {
 				break;
 		}
 		return $text_level;
-	} */
+	}
 
 	/* ----------------------------------------------------------------
 	*	Method - add_new_user()
 	*  ----------------------------------------------------------------
 	*	Takes one arguments.  
-	*
+	*/
 	public function add_new_user()
 	{
-		if(!isset($_SESSION['username'])
+		/* if(!isset($_SESSION['username'])
 		{
 			redirect('user/signin');
 		}
 		elseif($_SESSION['userlevel'] !== '1')
 		{
 			redirect('user/dashboard');
-		}
+		} */
 
 		if($_SERVER['REQUEST_METHOD'] !== "POST")
 		{
 			$data['user_data'] = $this->user_data();
 			$data['message'] = array(
 				'msg' => 'Wrong request type and/or bad form data',
-				'type' => $this->config->item['ERROR'];
-				)
-			$this->load=>view('User/create', $data);
+				//'type' => $this->config->item['ERROR'];
+				);
+			$this->load->view('user/create', $data);
 		}
 		else
 		{
@@ -210,7 +213,7 @@ class User extends CI_Controller {
 
 			redirect('dashboard');
 		}
-	} */
+	}
 
 	/* ----------------------------------------------------------------
 	*	Method - set_seesion()

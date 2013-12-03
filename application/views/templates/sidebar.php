@@ -10,12 +10,12 @@
           </a>
         </h4>
       </div>
-      <div id="collapseOne" class="panel-collapse collapse in">
+      <div id="collapseOne" class="panel-collapse collapse out">
         <div class="panel-body">
           <ul>
-           <li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Dashboard</a></li>
-           <li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Change Email</a></li>
-           <li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Chage Password</a></li>
+           <li><a href=<?php echo $this->config->item('full_url') . '/user' ?> >Dashboard</a></li>
+           <li><a href=<?php echo $this->config->item('full_url') . '/user/change_email' ?> >Change Email</a></li>
+           <li><a href=<?php echo $this->config->item('full_url') . '/user/change_password' ?> >Chage Password</a></li>
          </ul>
        </div>
      </div>
@@ -28,13 +28,12 @@
         </a>
       </h4>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse in">
+    <div id="collapseTwo" class="panel-collapse collapse out">
       <div class="panel-body">
         <ul>
-        	<li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Dashboard</a></li>
-        	<li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Catagories</a></li>
-        	<li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Add Photo</a></li>
-        	<li><a href=<?php  ?> ><span class="glyphicon glyphicon-chevron-right">Edit Photo</a></li>
+        	<li><a href=<?php echo $this->config->item('full_url') . '/gallery_item' ?> >Dashboard</a></li>
+        	<li><a href=<?php echo $this->config->item('full_url') . '/category' ?> >Categories</a></li>
+        	<li><a href=<?php echo $this->config->item('full_url') . '/gallery_item/add' ?> >Add Item</a></li>
         </ul>
       </div>
     </div>

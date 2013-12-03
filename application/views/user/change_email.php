@@ -2,7 +2,7 @@
  <div class="row">
      <form class="form-horizontal" action=<?php echo $this->config->item('full_url') . "User/update_user_from_form/email" ?> method="post">
       <fieldset>
-      	<legend>Change Email Form</legend>
+      	<legend>Change Email</legend>
         <div class="form-group">
         	<label for="email" class="col-sm-3 control-label">Email</label>
           <div class="col-sm-4">
