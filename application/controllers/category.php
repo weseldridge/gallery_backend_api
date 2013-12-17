@@ -20,6 +20,11 @@ class Category extends CI_Controller {
 
 	public function detail($id)
 	{
+		$data['category'] = $this->Category_model->get($id);
+		$this->load->view('templates/header');
+		$this->load->view('templates/sidebar');
+		$this->load->view('category/_view', $data);
+		$this->load->view('templates/footer');
 
 	}
 
@@ -44,7 +49,7 @@ class Category extends CI_Controller {
 			else
 			{
 				$item = array(
-					'name'=>$this->input->post('name'),
+					'name'=> $this->input->post('name')
 					);
 
 				$this->Category_model->add($item);
@@ -53,4 +58,33 @@ class Category extends CI_Controller {
 			}	
 		}
 	}
+
+	public function edit($id)
+	{		
+			$data['category'] = $this->Category_model->get($id);
+			$this->load->view('templates/header');
+			$this->load->view('templates/sidebar');
+			$this->load->view('category/edit_view', $data);
+			$this->load->view('templates/footer');
+	}
+
+	public function edit_category($id)
+	{
+		if($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			$post = $this->input->post();
+			$item = array(
+				'id' => $id,
+				'name' => $post['name']
+				);
+			$this->Category_model->update($item);
+			redirect('category');
+		}
+		else
+		{
+			redirect('category');
+		}
+	}
+
+
 }
