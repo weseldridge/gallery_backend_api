@@ -35,10 +35,12 @@ class Gallery_item extends CI_Controller {
 	*/
 	public function add()
 	{
+		$this->load->model('Category_model');
 		$data['message'] = '';
+		$data['categories'] = $this->Category_model->get_all();
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar');
-		$this->load->view('gallery/add_view');
+		$this->load->view('gallery/add_view',$data);
 		$this->load->view('templates/footer');
 	}
 
