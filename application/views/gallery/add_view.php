@@ -31,6 +31,12 @@
     <div class="form-group">
       <label for="category" class="col-sm-3 control-label">Category</label>
       <div class="col-sm-4">
+        <select class="form-control">
+          <option value="0">No Category</option>
+          <?php foreach ($categories as $category):?>
+          <option value=<?php echo $category['id'];?>><?php echo $category['name'];?></option>
+          <?php endforeach; ?>
+        </select>
       </div>
     </div>
     <br>
