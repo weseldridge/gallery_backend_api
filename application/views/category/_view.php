@@ -18,10 +18,10 @@
 							<td><button type="submit" class="btn btn-primary">Add</button> </td>
 						</form>
 					</tr>
-					<?php foreach ($categories as $category): ?>
+					<?php foreach($categories as $category): ?>
 						<tr>
 							<td><?php echo $category['id']; ?> </td>
-							<td><?php echo $category['name']; ?> </td>
+							<td><a href=<?php echo $this->config->item('full_url') . '/category/edit/' . $category['id']; ?>> <?php echo $category['name']; ?> </a></td>
 							<td></td>
 						</tr>
 					<?php endforeach; ?>
