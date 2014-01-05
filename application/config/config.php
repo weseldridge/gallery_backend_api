@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/personal/gallery-api/';
+$config['base_url']	= 'http://localhost/gallery-api/';
 
 
 /*
