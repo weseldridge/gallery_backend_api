@@ -5,14 +5,24 @@ class User_model extends CI_Model
 
 	public function get_user($username, $password)
 	{
-		return false;
+		$user = $this->db->where('username', $username)
+						->where('password', sha1($password))
+						->get('users');
+
+		if($user->num_rows() > 0)
+		{
+			$user = $user->result_array();
+			return $user[0];
+		} else {
+			return false;
+		}
 
 	}
 
 
-	public function add_user($username, $password)
+	public function add($user)
 	{
-
+		$this->db->insert('users', $user);
 	}
 
 }

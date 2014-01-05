@@ -1,6 +1,12 @@
+<?php if($view_msg['error_id'] != '0'): ?>
+  <div class="alert alert-<?php echo $view_msg['type']; ?>">
+    <?php echo $view_msg['msg']; ?> <br />
+    <?php echo validation_errors(); ?>
+  </div>
+<?php endif; ?>
 <div class="col-sm-9">
 <div class="row">
- <form class="form-horizontal" action=<?php echo $this->config->item('full_url') . "User/add_new_user" ?> method="post">
+ <form class="form-horizontal" action=<?php echo $this->config->item('full_url') . "/user/add_new_user" ?> method="post">
   <fieldset>
   	<legend>Add New User</legend>
     <div class="form-group">
@@ -13,12 +19,6 @@
       <label for="user_name" class="col-sm-3 control-label">User Name</label>
       <div class="col-sm-4">
         <input type="text"  class="form-control" name="user_name" id="user_name">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="user_name" class="col-sm-3 control-label">User Name</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" name="user_name" id="user_name">
       </div>
     </div>
     <div class="form-group">

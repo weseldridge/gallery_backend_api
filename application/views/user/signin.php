@@ -1,6 +1,6 @@
 <div class="col-sm-9">
 <div class="row">
-  <form class="form-horizontal" action=<?php echo $this->config->item('full_url') . "user/sign_me_in" ?> method="post">
+  <form class="form-horizontal" action=<?php echo $this->config->item('full_url') . "/user/sign_me_in" ?> method="post">
     <fieldset>
     	<legend>Please Sign In</legend>
       <div class="form-group">

@@ -5,8 +5,8 @@ class User extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		session_start();
 		$this->load->model('User_model');
-		//session_start();
 	}
 
 	/* ----------------------------------------------------------------
@@ -48,12 +48,45 @@ class User extends CI_Controller {
 	public function signin()
 	{
 
-		$data['message'] = '';
+		$data['view_msg'] = array(
+						'error_id' => '0',
+						);
 		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
+		// $this->load->view('templates/sidebar');
 		$this->load->view('user/signin');
 		$this->load->view('templates/footer');
 		
+	}
+
+	public function sign_me_in()
+	{
+		if($_SERVER['REQUEST_METHOD'] == "POST")
+		{
+			$this->form_validation->set_rules('username', "Username", 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+
+			if($this->form_validation->run())
+			{
+				$user = $this->validate_user($this->input->post('username'),
+									  $this->input->post('password'));
+
+				if($user)
+				{
+					$this->set_session($user);
+					redirect('dashboard');
+				} else {
+					$data['view_msg'] = array(
+						'error_id' => '1001',
+						'type' => 'danger',
+						'msg' => 'Username or Password is incorrect!'
+						);
+					$this->load->view('templates/header');
+					// $this->load->view('templates/sidebar');
+					$this->load->view('user/signin', $data);
+					$this->load->view('templates/footer');
+				}
+			}
+		}
 	}
 
 	/* ----------------------------------------------------------------
@@ -64,7 +97,7 @@ class User extends CI_Controller {
 	*/
 	public function logout()
 	{
-		//unset($_SESSION['username']);
+		$this->unset_session();
 		redirect('User/signin');
 
 	}
@@ -77,10 +110,12 @@ class User extends CI_Controller {
 	*	view. Presents the view. Only userlevel = 1 (admin) can create
 	*	new users.
 	*/
-	public function create_user()
+	public function create()
 	{
 
-		$data['user_data'] = ''; 
+		$data['view_msg'] = array(
+				'error_id' => '0'
+				);
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar');
 		$this->load->view('user/create', $data);
@@ -127,16 +162,7 @@ class User extends CI_Controller {
 	*/
 	private function validate_user($username, $password)
 	{
-		$user = false; //$this->User_model->get_user($username, sha1($password));
-
-		if($user == null)
-		{
-			return false;
-		}
-		else
-		{
-			return $user;
-		}
+		return $this->User_model->get_user($username, $password);
 	}
 
 	/* ----------------------------------------------------------------
@@ -188,78 +214,83 @@ class User extends CI_Controller {
 	*/
 	public function add_new_user()
 	{
-		/* if(!isset($_SESSION['username'])
-		{
-			redirect('user/signin');
-		}
-		elseif($_SESSION['userlevel'] !== '1')
-		{
-			redirect('user/dashboard');
-		} */
 
 		if($_SERVER['REQUEST_METHOD'] !== "POST")
 		{
-			$data['user_data'] = $this->user_data();
-			$data['message'] = array(
-				'msg' => 'Wrong request type and/or bad form data',
-				//'type' => $this->config->item['ERROR'];
+			$data['view_msg'] = array(
+				'error_id' => '2001', // Bad request type
+				'type' => 'danger',
+				'msg' => 'Wrong request type.',
 				);
+			$this->load->view('templates/header');
 			$this->load->view('user/create', $data);
+			$this->load->view('templates/footer');
 		}
 		else
 		{
-			$data = $this->input-post();
-			$this->User_model->add_user($data);
+			$this->form_validation->set_rules('display_name','Display Name','required');
+			$this->form_validation->set_rules('user_name','Usermame','required|min_length[6]|max_length[20]|is_unique[users.username]');
+			$this->form_validation->set_rules('email','Email','required|valid_email');
+			$this->form_validation->set_rules('password','Password','required|min_length[8]|max_length[20]|matches[confirm_password]');
 
-			redirect('dashboard');
+			if($this->form_validation->run())
+			{
+				$user = array(
+					'display_name' => $this->input->post('display_name'),
+					'username' => $this->input->post('user_name'),
+					'email' => $this->input->post('email'),
+					'password' => sha1($this->input->post('password')),
+					'userlevel' => $this->input->post('user_level'),
+					);
+
+				$this->User_model->add($user);
+
+				redirect('category');
+
+			} else {
+
+				$data['view_msg'] = array(
+					'error_id' => '3001', // Bad form data
+					'type' => 'warning',
+					'msg' => 'Bad form data.',
+				);
+
+				$this->load->view('templates/header');
+				$this->load->view('user/create', $data);
+				$this->load->view('templates/footer');
+
+			}
 		}
 	}
 
 	/* ----------------------------------------------------------------
 	*	Method - set_seesion()
 	*  ----------------------------------------------------------------
-	*	Takes one arguments - Sets the user session. Returns a string that is
-	* 	user level. 
-	*
-	private function set_seesion($user)
+	*	Takes one arguments - Sets the user session.
+	*/
+	private function set_session($user)
 	{
-		// $_SESSION['username'] = $user['username'];
-		// $_SESSION['userlevel'] = $user['userlevel'];
-		// $_SESSION['email'] = $user['email']
-	} */
+		$_SESSION['signedin'] = 1;
+		$_SESSION['username'] = $user['username'];
+		$_SESSION['userlevel'] = $user['userlevel'];
+		$_SESSION['email'] = $user['email'];
+		$_SESSION['user_id'] = $user['id'];
+	} 
 
 	/* ----------------------------------------------------------------
-	*	Method - set_seesion()
+	*	Method - unset_seesion()
 	*  ----------------------------------------------------------------
-	*	Takes one arguments - Sets the user session. Returns a string that is
-	* 	user level. 
-	*
-	public function update_user_from_form($update_type)
+	*	Takes no arguments - Unsets the user session.
+	*/
+	private function unset_session()
 	{
-		if($_SERVER['REQUEST_METHOD'] !== "POST")
-		{
-			$data['user_data'] = $this->user_data();
-			$data['message'] = array(
-				'msg' => 'Wrong request type and/or bad form data',
-				'type' => $this->config->item['ERROR'];
-				)
-			$this->load=>view('User/dashboard', $data);
-		}
-		else
-		{
-			$data = $this->input-post();
-			switch ($update_type) {
-				case 'email':
-				$this->User_model->update_user_field($_SESSION['username'],'email', $data['email']);
-				break;
-				case 'password':
-				$this->User_model->update_user_field($_SESSION['username'],'password', sha1($data['password']));
-				break;
-				default:
-				break;
-			}
-		}
-	} */
+		unset($_SESSION['signedin']);
+		unset($_SESSION['username']);
+		unset($_SESSION['userlevel']);
+		unset($_SESSION['email']);
+		unset($_SESSION['user_id']);
+	} 
+	
 
 	
 }
