@@ -48,7 +48,11 @@ class Gallery_model extends CI_Model
 
 	public function get_oldest()
 	{
-		$gallery = $this->db->select_min('id')
+		$gallery_id = $this->db->select_min('id')
+							->get('galleries');
+		$gallery_id = $gallery_id->result_array();
+		$gallery = $this->db->where('id', $gallery_id['0']['id'])
+							->limit(1)
 							->get('galleries');
 
 		if($gallery->num_rows() > 0)
@@ -79,6 +83,36 @@ class Gallery_model extends CI_Model
 			return false;
 		}
 
+	}
+
+	public function update($gallery)
+	{
+		$this->db->where('id', $gallery['id'])
+				->update('galleries', $gallery);
+	}
+
+	public function toggle_active($id)
+	{
+		$gallery =$this->db->where('id',$id)
+						->get('galleries');
+
+		if($gallery->num_rows() > 0)
+		{
+			$gallery = $gallery->result_array();
+			$gallery = $gallery[0];
+
+			if($gallery['is_active'] == 0)
+			{	
+				$gallery['is_active'] = 1;
+			} else {
+				$gallery['is_active'] = 0;
+			}
+
+			$this->db->where('id', $gallery['id'])
+					->update('galleries', $gallery);
+		} else {
+			return false;
+		}
 	}
 
 }

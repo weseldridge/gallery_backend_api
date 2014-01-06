@@ -11,12 +11,12 @@
         </div>
         <?php if($galleries): ?>
         <?php foreach ($galleries as $gallery): ?>
-        <div class="email-item email-item-selected pure-g">
+        <div class="email-item <?php if($gallery['id'] == $gallery_id){echo 'email-item-selected email-item-unread';}?> pure-g">
             <div class="pure-u">
                 <img class="email-avatar" height="64" width="64" src="<?php if($gallery['is_active']){echo $this->config->item('base_url') . 'img/is_active_gallery.png';}else{echo $this->config->item('base_url') . 'img/not_active_gallery.png';}?>">
             </div>
             <div class="pure-u-3-4">
-                <h5 class="email-name"><?php echo $gallery['name'];?></h5>
+                <h5 class="email-name"><a href="<?php echo $this->config->item('full_url') . '/gallery/detail/' . $gallery['id'];?>"><?php echo $gallery['name'];?></a></h5>
                 <p class="email-desc">
                     <?php echo substr($gallery['name'],0,100);?>
                 </p>

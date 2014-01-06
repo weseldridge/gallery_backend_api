@@ -20,24 +20,9 @@ class User extends CI_Controller {
 	public function index()
 	{
 
-		redirect('user/user_dash');
+		redirect('gallery');
 	}
 
-	/* ----------------------------------------------------------------
-	*	Method - user_dash()
-	*  ----------------------------------------------------------------
-	*	Takes no arguments. Loads user data into the the user/dashboard
-	*	view. Presents the view.
-	*/
-	public function user_dash()
-	{
-
-		$data['user_data'] = ''; //$this->user_data();
-		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
-		$this->load->view('user/dashboard', $data);
-		$this->load->view('templates/footer');
-	}
 
 
 	/* ----------------------------------------------------------------
@@ -51,10 +36,10 @@ class User extends CI_Controller {
 		$data['view_msg'] = array(
 						'error_id' => '0',
 						);
-		$this->load->view('templates/header');
+		$this->load->view('templates/header_logout');
 		// $this->load->view('templates/sidebar');
 		$this->load->view('user/signin');
-		$this->load->view('templates/footer');
+		$this->load->view('templates/footer_logout');
 		
 	}
 
@@ -73,7 +58,7 @@ class User extends CI_Controller {
 				if($user)
 				{
 					$this->set_session($user);
-					redirect('dashboard');
+					redirect('gallery');
 				} else {
 					$data['view_msg'] = array(
 						'error_id' => '1001',
@@ -89,6 +74,15 @@ class User extends CI_Controller {
 		}
 	}
 
+	public function profile()
+	{
+		$data['user'] = $this->get_user();
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar_user');
+		$this->load->view('user/profile');
+		$this->load->view('templates/footer');
+	}
+
 	/* ----------------------------------------------------------------
 	*	Method - logout()
 	*  ----------------------------------------------------------------
@@ -98,11 +92,14 @@ class User extends CI_Controller {
 	public function logout()
 	{
 		$this->unset_session();
-		redirect('User/signin');
+		redirect('user/signin');
 
 	}
 	
-
+	private function get_user()
+	{
+		return $this->User_model->get_by_id($_SESSION['user_id']);
+	}
 	/* ----------------------------------------------------------------
 	*	Method - create_user()
 	*  ----------------------------------------------------------------
@@ -164,24 +161,6 @@ class User extends CI_Controller {
 	{
 		return $this->User_model->get_user($username, $password);
 	}
-
-	/* ----------------------------------------------------------------
-	*	Method - user_data()
-	*  ----------------------------------------------------------------
-	*	Takes no arguments. Pulls user name from session, returns that 
-	*	user from data base, and builds use page data.
-	*
-	private function user_data()
-	{
-		$user = $this->User_model->get_user();
-
-		return array(
-			'display_name' => $user['display_name'],
-			'user_name' => $user['username'],
-			'email' => $user['email']
-			'user_level' => '';//$this->user_level($user['userlevel']);
-			);
-	} */
 
 	/* ----------------------------------------------------------------
 	*	Method - user_level()

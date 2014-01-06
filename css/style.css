@@ -1,0 +1,19 @@
+.side_in {
+	padding-top: 10%;
+}
+
+img {
+	max-width: 100%;
+}
+.img-rounded {
+  border-radius: 6px;
+}
+.category_list img {
+	max-width: 140px;
+	max-height: 140px;
+}
+
+.item_edit img {
+	max-width: 400px;
+	max-height: 400px;
+}

@@ -25,4 +25,19 @@ class User_model extends CI_Model
 		$this->db->insert('users', $user);
 	}
 
+	public function get_by_id($id)
+	{
+		$user = $this->db->where('id', $id)
+						->limit(1)
+						->get('users');
+
+		if($user->num_rows() > 0)
+		{
+			$user = $user->result_array();
+			return $user[0];
+		} else {
+			return false;
+		}
+	}
+
 }
