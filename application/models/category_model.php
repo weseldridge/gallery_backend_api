@@ -20,42 +20,21 @@ class Category_model extends CI_Model
 	}
 
 	/* ----------------------------------------------------------------
-	*	Method - get_all()
-	*  ----------------------------------------------------------------
-	*	Takes no arguments.
-	*/
-	public function get_all()
-	{
-		$q = $this->db->get('categories');
-
-		return $q->result_array();
-	}
-
-	/* ----------------------------------------------------------------
-	*	Method - get()
+	*	Method - get_by_gallery()
 	*  ----------------------------------------------------------------
 	*	Takes one arguments.
 	*/
-	public function get()
+	public function get_by_gallery($gal_id)
 	{
-		$q = $this->db
-					->get('categories');
+		$categories = $this->db->where('galleries_id', $gal_id)
+								->get('categories');
 
-		$q = $q->result_array();
-
-		return $q[0];
-	}
-
-	/* ----------------------------------------------------------------
-	*	Method - update()
-	*  ----------------------------------------------------------------
-	*	Takes one arguments.
-	*/
-	public function update($item)
-	{
-		$this->db
-			->where('id', $item['id'])
-			->update('categories', $item);
+		if($categories->num_rows() > 0)
+		{
+			return $categories->result_array();
+		} else {
+			return false;
+		}
 	}
 
 }

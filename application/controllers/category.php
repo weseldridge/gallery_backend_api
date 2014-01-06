@@ -10,79 +10,30 @@ class Category extends CI_Controller {
 
 	public function index()
 	{
-		$data['categories'] = $this->Category_model->get_all();
-		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
-		$this->load->view('category/_view', $data);
-		$this->load->view('templates/footer');
-
+		redirect('gallery');
 	}
 
-	public function detail($id)
-	{
-		$data['category'] = $this->Category_model->get($id);
-		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
-		$this->load->view('category/_view', $data);
-		$this->load->view('templates/footer');
-
-	}
-
-	public function add()
-	{
-		if($_SERVER['REQUEST_METHOD'] !== 'POST')
-		{
-			redirect('category');
-		}
-		else
-		{
-			$this->form_validation->set_rules('name', 'Name', 'required|min_length[5]|max_length[20]|is_unique[categories.name]');
-
-			if ($this->form_validation->run() == FALSE)
-			{
-				$data['categories'] = $this->Category_model->get_all();
-				$this->load->view('templates/header');
-				$this->load->view('templates/sidebar');
-				$this->load->view('category/_view', $data);
-				$this->load->view('templates/footer');
-			}
-			else
-			{
-				$item = array(
-					'name'=> $this->input->post('name')
-					);
-
-				$this->Category_model->add($item);
-
-				redirect('category');
-			}	
-		}
-	}
-
-	public function edit($id)
-	{		
-			$data['category'] = $this->Category_model->get($id);
-			$this->load->view('templates/header');
-			$this->load->view('templates/sidebar');
-			$this->load->view('category/edit_view', $data);
-			$this->load->view('templates/footer');
-	}
-
-	public function edit_category($id)
+	public function add_this_category()
 	{
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			$post = $this->input->post();
-			$item = array(
-				'id' => $id,
-				'name' => $post['name']
-				);
-			$this->Category_model->update($item);
-			redirect('category');
-		}
-		else
-		{
-			redirect('category');
+			$this->form_validation->set_rules('name', "Gallery Name", 'required');
+			$this->form_validation->set_rules('description', "Description", 'required');
+
+			if($this->form_validation->run())
+			{
+				$category = array(
+					'galleries_id' => $this->input->post('gallery_id'),
+					'name' => $this->input->post('name'),
+					'description' => $this->input->post('description'),
+					);
+
+				$this->Category_model->add($category);
+
+				redirect('gallery/detail/' . $this->input->post('gallery_id'));
+			} else {
+				redirect('gallery/detail/' . $this->input->post('gallery_id'));
+			}
 		}
 	}
 

@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
-<title>Gallery API</title>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-<link rel="stylesheet" href=<?php echo $this->config->item('base_url') . 'css/main.css'; ?>>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1" />
+  <title>Gallery API</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+  <link rel="stylesheet" href=<?php echo $this->config->item('base_url') . 'css/main.css'; ?>>
+  <link rel="stylesheet" href=<?php echo $this->config->item('base_url') . 'css/style.css'; ?>>
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <a class="navbar-brand" href="#">Galley API</a>
+  <div class="pure-g-r content" id="layout">
+    <div class="pure-u" id="nav">
+      <a href="#" class="nav-menu-button">Menu</a>
 
-  
-    <div class="btn-group pull-right">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <span class="glyphicon glyphicon-cog"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href=<?php echo '#';  ?> >User Dashboard</a></li>
-      <li><a href=<?php echo '#'; ?> >Gallery Dashboard</a></li>
-      <li class="divider"></li>
-      <li><a href=<?php echo '#'; ?> >Log Out</a></li>
-    </ul>
+      <div class="nav-inner">
+        <div class="pure-menu pure-menu-open">
+          <ul>
+            <li><a href="<?php echo $this->config->item('full_url') . "/gallery"; ?>">Galleries</span></a></li>
+            <li><a href="<?php echo $this->config->item('full_url') . "/user/profile"; ?>">My Profile</a></li>
+            <li></li>
+            <li><a href="<?php echo $this->config->item('full_url') . "/user/logout"; ?>">Log Out</a>
+          </ul>
+      </div>
+    </div>
   </div>
-</nav>
-
-<div class="container">
-	<div class="row">
 
