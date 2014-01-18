@@ -1,7 +1,7 @@
 <div class="pure-u-1" id="main">
     <div class="email-content">
         <div class="email-content-header pure-g">
-            <form class="pure-form" action="<?php echo $this->config->item('full_url') . '/category/add_this_category';?>" method="post">    
+            <form class="pure-form" action="<?php echo $this->config->item('full_url') . '/gallery/update_this_category';?>" method="post">    
                 <div class="pure-u-1-2">
 
                     <h1 class="email-content-title"><input type="text" name="name" id="name" value="<?php echo $current_gallery['name']?>"></h1>

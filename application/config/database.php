@@ -66,5 +66,22 @@ $db['default']['stricton'] = FALSE;
 $db['default']['port'] = 3871;
 
 
+$db['stage']['hostname'] = '127.0.0.1';
+$db['stage']['username'] = 'rebellio_gallery';
+$db['stage']['password'] = '4tkXUR4yLeWg67IW0';
+$db['stage']['database'] = 'rebellio_gallery';
+$db['stage']['dbdriver'] = 'mysql';
+$db['stage']['dbprefix'] = '';
+$db['stage']['pconnect'] = TRUE;
+$db['stage']['db_debug'] = TRUE;
+$db['stage']['cache_on'] = FALSE;
+$db['stage']['cachedir'] = '';
+$db['stage']['char_set'] = 'utf8';
+$db['stage']['dbcollat'] = 'utf8_general_ci';
+$db['stage']['swap_pre'] = '';
+$db['stage']['autoinit'] = TRUE;
+$db['stage']['stricton'] = FALSE;
+
+
 /* End of file database.php */
 /* Location: ./application/config/database.php */
